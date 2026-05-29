@@ -117,32 +117,5 @@
 
 		"esri/": "https://API_URL/esri/"
 	}
-}</script>
-<script src="https://alcdn.msauth.net/browser/2.32.0/js/msal-browser.min.js"></script>
-<script>
-(function() {
-	var redirectUri = window.location.origin + window.location.pathname;
-	if (redirectUri.indexOf('?') !== -1) redirectUri = redirectUri.split('?')[0];
-	if (redirectUri.indexOf('#') !== -1) redirectUri = redirectUri.split('#')[0];
-	if (!redirectUri.endsWith('/') && !/\/[^/]+\.[^/]+$/.test(redirectUri)) redirectUri += '/';
-	var msalConfig = { auth: { clientId: '91116c12-df16-4230-b9f9-9d87724e0b8d', authority: 'https://login.microsoftonline.com/c6baacb8-6185-4ebf-b80a-9d26b8800a3d', redirectUri: redirectUri, postLogoutRedirectUri: redirectUri, navigateToLoginRequestUrl: true }, cache: { cacheLocation: 'sessionStorage', storeAuthStateInCookie: false } };
-	var loginRequest = { scopes: ['User.Read'] };
-	function loadApp() { document.getElementById('loading').style.display = 'none'; document.getElementById('app').style.display = 'block'; var s = document.createElement('script'); s.src = './jimu-core/init.js'; s.async = false; document.body.appendChild(s); }
-	function initAuth() {
-		if (typeof msal === 'undefined') { document.getElementById('loading').innerHTML = '<p style="padding:2rem;text-align:center;">Microsoft sign-in library failed to load.</p>'; return; }
-		var msalInstance = new msal.PublicClientApplication(msalConfig);
-		msalInstance.initialize()
-			.then(function() {
-				return msalInstance.handleRedirectPromise();
-			})
-			.then(function(response) {
-				var accounts = msalInstance.getAllAccounts();
-				if (accounts.length === 0) return msalInstance.loginRedirect(loginRequest);
-				loadApp();
-			})
-			.catch(function(err) { console.error('MSAL init error', err); document.getElementById('loading').innerHTML = '<p style="padding:2rem;text-align:center;">Sign-in failed. Check console.</p>'; });
-	}
-	if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initAuth); else initAuth();
-})();
-</script>
-</body></html>
+}</script><script src="./jimu-core/init.js"></script></body></html>
+
